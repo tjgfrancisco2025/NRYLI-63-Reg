@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>63rd NRYLI Online Registration</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.2em;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .progress-bar {
+            background: rgba(255, 255, 255, 0.2);
+            height: 8px;
+            border-radius: 4px;
+            margin-top: 20px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            background: #4CAF50;
+            height: 100%;
+            border-radius: 4px;
+            transition: width 0.5s ease;
+        }
+
+        .form-container {
+            padding: 40px;
+        }
+
+        .page {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+            font-size: 14px;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e1e5e9;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background: #f8f9fa;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 20px;
+        }
+
+        .form-row-3 {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 20px;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn-primary:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+            margin-right: 15px;
+        }
+
+        .btn-secondary:hover {
+            background: #5a6268;
+        }
+
+        .btn-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #e1e5e9;
+        }
+
+        .file-upload {
+            position: relative;
+            display: inline-block;
+            width: 100%;
+        }
+
+        .file-upload input[type=file] {
+            position: absolute;
+            opacity: 0;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+        }
+
+        .file-upload-label {
+            display: block;
+            padding: 12px 16px;
+            border: 2px dashed #667eea;
+            border-radius: 8px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: #f8f9ff;
+        }
+
+        .file-upload-label:hover {
+            background: #e8f0ff;
+            border-color: #4a5fd7;
+        }
+
+        .bank-info {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+            border-left: 4px solid #667eea;
+        }
+
+        .bank-info h3 {
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .bank-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .bank-detail {
+            background: white;
+            padding: 12px;
+            border-radius: 6px;
+            border: 1px solid #e1e5e9;
+        }
+
+        .bank-detail strong {
+            color: #667eea;
+            font-size: 14px;
+        }
+
+        .summary-section {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .summary-section h3 {
+            color: #333;
+            margin-bottom: 15px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #667eea;
+        }
+
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid #e1e5e9;
+        }
+
+        .summary-item:last-child {
+            border-bottom: none;
+        }
+
+        .summary-label {
+            font-weight: 600;
+            color: #666;
+        }
+
+        .summary-value {
+            color: #333;
+        }
+
+        .privacy-notice {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .privacy-notice h4 {
+            color: #856404;
+            margin-bottom: 10px;
+        }
+
+        .privacy-notice p {
+            color: #856404;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .confirmation-page {
+            text-align: center;
+            padding: 40px;
+        }
+
+        .success-icon {
+            width: 80px;
+            height: 80px;
+            background: #4CAF50;
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 40px;
+        }
+
+        .confirmation-page h2 {
+            color: #4CAF50;
+            margin-bottom: 15px;
+        }
+
+        .confirmation-page p {
+            color: #666;
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
+        .loading-spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            animation: spin 1s linear infinite;
+            display: inline-block;
+            margin-right: 10px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .error-message {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border: 1px solid #f5c6cb;
+        }
+
+        @media (max-width: 768px) {
+            .form-row, .form-row-3, .bank-details {
+                grid-template-columns: 1fr;
+            }
+            
+            .container {
+                margin: 10px;
+                border-radius: 15px;
+            }
+            
+            .header, .form-container {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>63rd National Rizal Youth Leadership Institute</h1>
+            <p>Online Registration System</p>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+        </div>
+
+        <div class="form-container">
+            <!-- Error message container -->
+            <div id="errorMessage" class="error-message" style="display: none;"></div>
+
+            <!-- Page 1: Institution Details -->
+            <div class="page active" id="page1">
+                <h2>Institution & Delegate Information</h2>
+                
+                <div class="form-group">
+                    <label for="delegateType">Delegate Type *</label>
+                    <select id="delegateType" required>
+                        <option value="">Select Delegate Type</option>
+                        <option value="Head of Delegation">Head of Delegation</option>
+                        <option value="Delegate">Delegate</option>
+                        <option value="JRMSP Finalist">JRMSP Finalist</option>
+                        <option value="Adviser/Chaperone">Adviser/Chaperone</option>
+                    </select>
+                </div>
+
+                <div class="form-row-3">
+                    <div class="form-group">
+                        <label for="surname">Surname *</label>
+                        <input type="text" id="surname" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="firstName">First Name *</label>
+                        <input type="text" id="firstName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="middleInitial">Middle Initial</label>
+                        <input type="text" id="middleInitial" maxlength="1">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="institution">Name of Institution/Agency *</label>
+                    <input type="text" id="institution" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="institutionAddress">Address of Institution *</label>
+                    <textarea id="institutionAddress" rows="3" required></textarea>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="institutionContact">Contact Number of Institution *</label>
+                        <input type="tel" id="institutionContact" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="regionCluster">Region Cluster *</label>
+                        <select id="regionCluster" required>
+                            <option value="">Select Region</option>
+                            <option value="NCR">NCR</option>
+                            <option value="Luzon">Luzon</option>
+                            <option value="Visayas">Visayas</option>
+                            <option value="Mindanao">Mindanao</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="institutionEmail">Email Address of Institution *</label>
+                    <input type="email" id="institutionEmail" required>
+                </div>
+
+                <div class="btn-container">
+                    <div></div>
+                    <button type="button" class="btn btn-primary" onclick="nextPage()">Next →</button>
+                </div>
+            </div>
+
+            <!-- Page 2: Personal Details -->
+            <div class="page" id="page2">
+                <h2>Personal Information</h2>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="delegateContact">Delegate Contact Number *</label>
+                        <input type="tel" id="delegateContact" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="age">Age *</label>
+                        <input type="number" id="age" min="15" max="35" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="delegateEmail">Delegate Email Address *</label>
+                    <input type="email" id="delegateEmail" required>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="tshirtSize">T-shirt Size *</label>
+                        <select id="tshirtSize" required>
+                            <option value="">Select Size</option>
+                            <option value="XS">Extra Small (XS)</option>
+                            <option value="S">Small (S)</option>
+                            <option value="M">Medium (M)</option>
+                            <option value="L">Large (L)</option>
+                            <option value="XL">Extra Large (XL)</option>
+                            <option value="XXL">Double Extra Large (XXL)</option>
+                            <option value="XXXL">Triple Extra Large (XXXL)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="dietaryPreferences">Dietary Preferences</label>
+                        <select id="dietaryPreferences">
+                            <option value="None">No dietary restrictions</option>
+                            <option value="Vegetarian">Vegetarian</option>
+                            <option value="Vegan">Vegan</option>
+                            <option value="Halal">Halal</option>
+                            <option value="Kosher">Kosher</option>
+                            <option value="Gluten-Free">Gluten-Free</option>
+                            <option value="Other">Other (specify in comments)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="dietaryComments">Additional Dietary Comments</label>
+                    <textarea id="dietaryComments" rows="3" placeholder="Please specify any other dietary requirements or allergies"></textarea>
+                </div>
+
+                <div class="btn-container">
+                    <button type="button" class="btn btn-secondary" onclick="prevPage()">← Back</button>
+                    <button type="button" class="btn btn-primary" onclick="nextPage()">Next →</button>
+                </div>
+            </div>
+
+            <!-- Page 3: Payment Information -->
+            <div class="page" id="page3">
+                <h2>Payment Information</h2>
+                
+                <div class="bank-info">
+                    <h3>KOR Bank Account Details</h3>
+                    <div class="bank-details">
+                        <div class="bank-detail">
+                            <strong>Bank Name:</strong><br>
+                            METROBANK - Anda Circle-Port Area Branch, Manila
+                        </div>
+                        <div class="bank-detail">
+                            <strong>Account Name:</strong><br>
+                            ORDER OF THE KNIGHTS OF RIZAL
+                        </div>
+                        <div class="bank-detail">
+                            <strong>Account Number:</strong><br>
+                            151-3-15151338-8
+                        </div>
+                        <div class="bank-detail">
+                            <strong>Registration Fee:</strong><br>
+                            PHP 7,000.00 (Regular Rate)<br>
+                            PHP 6,500.00 (Early Bird Rate until 30 Oct 2025)
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="paymentOption">Payment Option *</label>
+                    <select id="paymentOption" required>
+                        <option value="">Select Payment Method</option>
+                        <option value="Bank Transfer">Bank Transfer</option>
+                        <option value="Online Banking">Online Banking</option>
+                        <option value="Over-the-Counter">Over-the-Counter Deposit</option>
+                        <option value="GCash">GCash</option>
+                        <option value="PayMaya">PayMaya</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="paymentProof">Upload Payment Proof (Deposit Slip/Invoice) *</label>
+                    <div class="file-upload">
+                        <input type="file" id="paymentProof" accept=".jpg,.jpeg,.png,.pdf,image/*" required>
+                        <label for="paymentProof" class="file-upload-label">
+                            📎 Click to upload or drag file here<br>
+                            <small>Accepted formats: JPG, PNG, PDF (Max 5MB)</small>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="transactionRef">Transaction Reference Number</label>
+                    <input type="text" id="transactionRef" placeholder="Enter reference number from your payment">
+                </div>
+
+                <div class="btn-container">
+                    <button type="button" class="btn btn-secondary" onclick="prevPage()">← Back</button>
+                    <button type="button" class="btn btn-primary" onclick="nextPage()">Next →</button>
+                </div>
+            </div>
+
+            <!-- Page 4: Summary & Privacy Notice -->
+            <div class="page" id="page4">
+                <h2>Registration Summary</h2>
+                
+                <div class="summary-section">
+                    <h3>Institution Information</h3>
+                    <div id="institutionSummary"></div>
+                </div>
+
+                <div class="summary-section">
+                    <h3>Personal Information</h3>
+                    <div id="personalSummary"></div>
+                </div>
+
+                <div class="summary-section">
+                    <h3>Payment Information</h3>
+                    <div id="paymentSummary"></div>
+                </div>
+
+                <div class="privacy-notice">
+                    <h4>Privacy Notice</h4>
+                    <p>By submitting this registration form, you acknowledge that the information provided will be used solely for the purposes of the 63rd National Rizal Youth Leadership Institute. Your personal data will be handled in accordance with the Data Privacy Act of 2012 (Republic Act No. 10173) and will not be shared with third parties without your consent, except as required by law. You have the right to access, correct, or request deletion of your personal information by contacting our data protection officer.</p>
+                </div>
+
+                <div class="btn-container">
+                    <button type="button" class="btn btn-secondary" onclick="prevPage()">← Back</button>
+                    <button type="button" class="btn btn-primary" id="submitBtn" onclick="submitForm()">Submit Registration</button>
+                </div>
+            </div>
+
+            <!-- Confirmation Page -->
+            <div class="page" id="confirmationPage">
+                <div class="confirmation-page">
+                    <div class="success-icon">✓</div>
+                    <h2>Registration Successful!</h2>
+                    <p>Thank you for registering for the 63rd National Rizal Youth Leadership Institute.</p>
+                    <p>Your registration has been submitted successfully. You will receive a confirmation email within 24 hours.</p>
+                    <p><strong>Registration ID:</strong> <span id="registrationId"></span></p>
+                    <p>Please keep this ID for your records.</p>
+                    
+                    <div style="margin-top: 30px;">
+                        <button type="button" class="btn btn-primary" onclick="window.print()">Print Confirmation</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentPage = 1;
+        const totalPages = 4;
+        const formData = {};
+
+        function showError(message) {
+            const errorDiv = document.getElementById('errorMessage');
+            errorDiv.textContent = message;
+            errorDiv.style.display = 'block';
+            errorDiv.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function hideError() {
+            document.getElementById('errorMessage').style.display = 'none';
+        }
+
+        function updateProgress() {
+            const progress = (currentPage / totalPages) * 100;
+            document.getElementById('progressFill').style.width = progress + '%';
+        }
+
+        function showPage(pageNum) {
+            hideError();
+            // Hide all pages
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+            
+            // Show current page
+            document.getElementById('page' + pageNum).classList.add('active');
+            
+            // Update progress
+            updateProgress();
+        }
+
+        function validateCurrentPage() {
+            const currentPageElement = document.getElementById('page' + currentPage);
+            const requiredFields = currentPageElement.querySelectorAll('[required]');
+            
+            for (let field of requiredFields) {
+                if (!field.value.trim()) {
+                    field.focus();
+                    showError('Please fill in all required fields.');
+                    return false;
+                }
+            }
+            
+            // Additional validation for email fields
+            const emailFields = currentPageElement.querySelectorAll('input[type="email"]');
+            for (let email of emailFields) {
+                if (email.value && !email.value.includes('@')) {
+                    email.focus();
+                    showError('Please enter a valid email address.');
+                    return false;
+                }
+            }
+
+            // File size validation
+            if (currentPage === 3) {
+                const fileInput = document.getElementById('paymentProof');
+                if (fileInput.files[0]) {
+                    const fileSize = fileInput.files[0].size / 1024 / 1024; // Convert to MB
+                    if (fileSize > 5) {
+                        showError('Payment proof file must be smaller than 5MB.');
+                        return false;
+                    }
+                }
+            }
+            
+            return true;
+        }
+
+        function saveCurrentPageData() {
+            const currentPageElement = document.getElementById('page' + currentPage);
+            const inputs = currentPageElement.querySelectorAll('input, select, textarea');
+            
+            inputs.forEach(input => {
+                if (input.type === 'file') {
+                    formData[input.id] = input.files[0] ? input.files[0].name : '';
+                } else {
+                    formData[input.id] = input.value;
+                }
+            });
+        }
+
+        function nextPage() {
+            if (validateCurrentPage()) {
+                saveCurrentPageData();
+                
+                if (currentPage === 4) {
+                    generateSummary();
+                }
+                
+                if (currentPage < totalPages) {
+                    currentPage++;
+                    showPage(currentPage);
+                }
+            }
+        }
+
+        function prevPage() {
+            if (currentPage > 1) {
+                currentPage--;
+                showPage(currentPage);
+            }
+        }
+
+        function generateSummary() {
+            // Institution Summary
+            const institutionSummary = document.getElementById('institutionSummary');
+            institutionSummary.innerHTML = `
+                <div class="summary-item"><span class="summary-label">Delegate Type:</span><span class="summary-value">${formData.delegateType}</span></div>
+                <div class="summary-item"><span class="summary-label">Full Name:</span><span class="summary-value">${formData.surname}, ${formData.firstName} ${formData.middleInitial || ''}</span></div>
+                <div class="summary-item"><span class="summary-label">Institution:</span><span class="summary-value">${formData.institution}</span></div>
+                <div class="summary-item"><span class="summary-label">Institution Address:</span><span class="summary-value">${formData.institutionAddress}</span></div>
+                <div class="summary-item"><span class="summary-label">Institution Contact:</span><span class="summary-value">${formData.institutionContact}</span></div>
+                <div class="summary-item"><span class="summary-label">Institution Email:</span><span class="summary-value">${formData.institutionEmail}</span></div>
+                <div class="summary-item"><span class="summary-label">Region Cluster:</span><span class="summary-value">${formData.regionCluster}</span></div>
+            `;
+
+            // Personal Summary
+            const personalSummary = document.getElementById('personalSummary');
+            personalSummary.innerHTML = `
+                <div class="summary-item"><span class="summary-label">Contact Number:</span><span class="summary-value">${formData.delegateContact}</span></div>
+                <div class="summary-item"><span class="summary-label">Email Address:</span><span class="summary-value">${formData.delegateEmail}</span></div>
+                <div class="summary-item"><span class="summary-label">Age:</span><span class="summary-value">${formData.age}</span></div>
+                <div class="summary-item"><span class="summary-label">T-shirt Size:</span><span class="summary-value">${formData.tshirtSize}</span></div>
+                <div class="summary-item"><span class="summary-label">Dietary Preferences:</span><span class="summary-value">${formData.dietaryPreferences}</span></div>
+                ${formData.dietaryComments ? `<div class="summary-item"><span class="summary-label">Dietary Comments:</span><span class="summary-value">${formData.dietaryComments}</span></div>` : ''}
+            `;
+
+            // Payment Summary
+            const paymentSummary = document.getElementById('paymentSummary');
+            paymentSummary.innerHTML = `
+                <div class="summary-item"><span class="summary-label">Payment Method:</span><span class="summary-value">${formData.paymentOption}</span></div>
+                <div class="summary-item"><span class="summary-label">Payment Proof:</span><span class="summary-value">${formData.paymentProof || 'File uploaded'}</span></div>
+                ${formData.transactionRef ? `<div class="summary-item"><span class="summary-label">Transaction Reference:</span><span class="summary-value">${formData.transactionRef}</span></div>` : ''}
+                <div class="summary-item"><span class="summary-label">Registration Fee:</span><span class="summary-value">PHP 7,000.00 (Regular) / PHP 6,500.00 (Early Bird)</span></div>
+            `;
+        }
+
+        async function submitForm() {
+            saveCurrentPageData();
+            
+            const submitBtn = document.getElementById('submitBtn');
+            const originalText = submitBtn.innerHTML;
+            
+            // Disable button and show loading
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<span class="loading-spinner"></span>Submitting...';
+            
+            try {
+                // Create FormData object
+                const formDataToSend = new FormData();
+                
+                // Add all form fields
+                Object.keys(formData).forEach(key => {
+                    if (key !== 'paymentProof') {
+                        formDataToSend.append(key, formData[key] || '');
+                    }
+                });
+                
+                // Add file if present
+                const fileInput = document.getElementById('paymentProof');
+                if (fileInput.files[0]) {
+                    formDataToSend.append('paymentProof', fileInput.files[0]);
+                }
+                
+                // Submit to API
+                const response = await fetch('/api/submit-registration', {
+                    method: 'POST',
+                    body: formDataToSend
+                });
+                
+                const result = await response.json();
+                
+                if (response.ok && result.success) {
+                    // Show success page
+                    document.getElementById('registrationId').textContent = result.registrationId;
+                    
+                    // Show confirmation page
+                    document.querySelectorAll('.page').forEach(page => {
+                        page.classList.remove('active');
+                    });
+                    document.getElementById('confirmationPage').classList.add('active');
+                    
+                    // Update progress to 100%
+                    document.getElementById('progressFill').style.width = '100%';
+                    
+                    // Scroll to top
+                    window.scrollTo(0, 0);
+                    
+                } else {
+                    throw new Error(result.error || 'Registration failed');
+                }
+                
+            } catch (error) {
+                console.error('Submission error:', error);
+                showError('Failed to submit registration. Please try again. Error: ' + error.message);
+                
+                // Re-enable button
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = originalText;
+            }
+        }
+
+        // File upload handling
+        document.getElementById('paymentProof').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            const label = document.querySelector('.file-upload-label');
+            
+            if (file) {
+                const fileSize = (file.size / 1024 / 1024).toFixed(2);
+                label.innerHTML = `
+                    ✓ ${file.name}<br>
+                    <small>File size: ${fileSize} MB</small>
+                `;
+                label.style.background = '#e8f5e8';
+                label.style.borderColor = '#4CAF50';
+                
+                // Validate file size
+                if (file.size > 5 * 1024 * 1024) {
+                    showError('File size must be less than 5MB');
+                    e.target.value = '';
+                    label.innerHTML = `
+                        📎 Click to upload or drag file here<br>
+                        <small>Accepted formats: JPG, PNG, PDF (Max 5MB)</small>
+                    `;
+                    label.style.background = '#f8f9ff';
+                    label.style.borderColor = '#667eea';
+                }
+            }
+        });
+
+        // Initialize
+        updateProgress();
+        
+        // Add form validation on input
+        document.addEventListener('DOMContentLoaded', function() {
+            const inputs = document.querySelectorAll('input, select, textarea');
+            inputs.forEach(input => {
+                input.addEventListener('blur', function() {
+                    if (this.hasAttribute('required') && !this.value.trim()) {
+                        this.style.borderColor = '#dc3545';
+                    } else {
+                        this.style.borderColor = '#e1e5e9';
+                    }
+                });
+                
+                input.addEventListener('input', function() {
+                    if (this.style.borderColor === 'rgb(220, 53, 69)') {
+                        this.style.borderColor = '#e1e5e9';
+                    }
+                    hideError();
+                });
+            });
+        });
+    </script>
+</body>
+</html>
