@@ -1,15 +1,14 @@
 {
+  "// Solution 1: Modern approach using 'functions' (Recommended)": "Remove 'builds' and use 'functions'",
   "version": 2,
-  "builds": [
-    {
-      "src": "*.html",
-      "use": "@vercel/static"
+  "functions": {
+    "api/**/*.js": {
+      "runtime": "nodejs18.x"
     },
-    {
-      "src": "api/*.js",
-      "use": "@vercel/node"
+    "api/**/*.ts": {
+      "runtime": "nodejs18.x"
     }
-  ],
+  },
   "routes": [
     {
       "src": "/api/(.*)",
@@ -20,9 +19,8 @@
       "dest": "/$1"
     }
   ],
-  "functions": {
-    "api/submit-registration.js": {
-      "runtime": "nodejs18.x"
-    }
+  "env": {
+    "SUPABASE_URL": "postgresql://postgres:KORihq@2025@db.iuwaqqrxsylmhdgnfwwm.supabase.co:5432/postgres,
+    "SUPABASE_ANON_KEY": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Iml1d2FxcXJ4c3lsbWhkZ25md3dtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTMwNzI0MDcsImV4cCI6MjA2ODY0ODQwN30.jNXugqyGcsycu7FnVF9HDi-TzjkU2NAD4vz0SFExK9w"
   }
 }
