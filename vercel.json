@@ -1,26 +1,9 @@
 {
-  "// Solution 1: Modern approach using 'functions' (Recommended)": "Remove 'builds' and use 'functions'",
   "version": 2,
-  "functions": {
-    "api/**/*.js": {
-      "runtime": "nodejs18.x"
-    },
-    "api/**/*.ts": {
-      "runtime": "nodejs18.x"
-    }
-  },
   "routes": [
     {
       "src": "/api/(.*)",
       "dest": "/api/$1"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/$1"
     }
-  ],
-  "env": {
-    "SUPABASE_URL": "postgresql://postgres:KORihq@2025@db.iuwaqqrxsylmhdgnfwwm.supabase.co:5432/postgres,
-    "SUPABASE_ANON_KEY": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Iml1d2FxcXJ4c3lsbWhkZ25md3dtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTMwNzI0MDcsImV4cCI6MjA2ODY0ODQwN30.jNXugqyGcsycu7FnVF9HDi-TzjkU2NAD4vz0SFExK9w"
-  }
+  ]
 }
