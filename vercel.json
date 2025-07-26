@@ -21,8 +21,8 @@
     }
   ],
   "functions": {
-    "api/*.js": {
-      "maxDuration": 30
+    "api/submit-registration.js": {
+      "runtime": "nodejs18.x"
     }
   }
 }
